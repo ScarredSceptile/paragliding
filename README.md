@@ -53,12 +53,12 @@ Available fields for track are:
 ═════════════════════════════════════════════════════════════════════════════
 
 Format for posting a webhook:
-
+```
 {
     "webhookURL": "<WebhookURL>",
     "minTriggerValue": <Number>
 }
-  
+```
   Where <WebhookURL is the URL for your webhook, and <Number> is the amount of tracks you want posted before you get a notification about added tracks.
   
 ═════════════════════════════════════════════════════════════════════════════
