@@ -20,19 +20,19 @@ All of the application will be under /paragliding/ but not the admin pages
 
 /paragliding/api/track is where you can POST a track and GET all the ids of the igcs in the app
 
-/paragliding/api/track/<id> to get the track of a given id
+/paragliding/api/track/`<id>` to get the track of a given id
   
-/paragliding/api/track/<id>/<field> to get the field of the track with the given id.
+/paragliding/api/track/`<id>`/`<field>` to get the field of the track with the given id.
   
 /paragliding/api/ticker/latest to get the last timestamp of the last added track
 
 /paragliding/api/ticker/ to get the 5 first timestamps
 
-/paragliding/api/ticker/<timestamp> to get the first 5 timestamps after given timestamp
+/paragliding/api/ticker/`<timestamp>` to get the first 5 timestamps after given timestamp
   
 /paragliding/api/webhook/new_track/ is where you can POST a webhook
 
-/paragliding/api/new_track/<webhook_id> is where you can GET information about a webhook with given id, or DELETE it
+/paragliding/api/new_track/`<webhook_id>` is where you can GET information about a webhook with given id, or DELETE it
   
 ═════════════════════════════════════════════════════════════════════════════
   
@@ -59,7 +59,7 @@ Format for posting a webhook:
     "minTriggerValue": <Number>
 }
 ```
-  Where <WebhookURL is the URL for your webhook, and <Number> is the amount of tracks you want posted before you get a notification about added tracks.
+  Where `<WebhookURL` is the URL for your webhook, and `<Number>` is the amount of tracks you want posted before you get a notification about added tracks.
   
 ═════════════════════════════════════════════════════════════════════════════
 
