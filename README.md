@@ -60,6 +60,8 @@ Format for posting a webhook:
 }
 ```
   Where `<WebhookURL` is the URL for your webhook, and `<Number>` is the amount of tracks you want posted before you get a notification about added tracks.
+
+The webhook is formatted for slack, but you can use discord webhook if you add /slack to the end of the url.
   
 ═════════════════════════════════════════════════════════════════════════════
 
