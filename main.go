@@ -58,6 +58,10 @@ type WebhookMessage struct {
 	Processing string`json:"processing"`
 }
 
+type WebHookSend struct {
+	Message WebhookMessage `json:"text"`
+}
+
 var urlAmount int
 var webhookAmount int
 var clockSaved int
@@ -511,7 +515,9 @@ func sendWebhook(w http.ResponseWriter) {
 			process := (time.Now().UnixNano() / int64(time.Millisecond)) - processStart
 			processString := strconv.FormatInt(process, 10)
 
-			message := WebhookMessage{tempTimeStamp.TimeStamp, tracks, processString}
+			messageBody := WebhookMessage{tempTimeStamp.TimeStamp, tracks, processString}
+
+			message := WebHookSend{messageBody}
 
 			messageJSON, err := json.Marshal(message)
 
@@ -586,9 +592,31 @@ func manageWebhook(w http.ResponseWriter, r *http.Request) {
 }
 
 func clockTrigger() {
-	if clockSaved < urlAmount {
-		messageJSON, err := json.Marshal("More tracks has been uploaded in the last 10 minutes!")
+	if clockSaved < urlAmount + deletedTracks {
+		processStart := time.Now().UnixNano() / int64(time.Millisecond)
 
+		 tracks := []string{}
+		 var tLate bson.ObjectId
+
+		for i := clockSaved + 1; i <= urlAmount + deletedTracks; i++ {
+			tempTrack, ok := trackDataBase.Get("igc" + strconv.Itoa(i))
+			if !ok {
+				panic(ok)
+			}
+			tracks = append(tracks, tempTrack.ID)
+
+			if i == urlAmount + deletedTracks {
+				tLate = tempTrack.TimeStamp
+			}
+		}
+
+		process := (time.Now().UnixNano() / int64(time.Millisecond)) - processStart
+		processString := strconv.FormatInt(process, 10)
+		messageBody := WebhookMessage{tLate,tracks,processString}
+
+		message := WebHookSend{messageBody}
+
+		messageJSON, err := json.Marshal(message)
 		if err != nil {
 			panic(err)
 		}
